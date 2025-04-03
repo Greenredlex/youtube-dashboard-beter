@@ -2,26 +2,31 @@
   "name": "youtube-dashboard-beter",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "copy-data": "node scripts/copy-data.js"
   },
   "dependencies": {
+    "chart.js": "latest",
+    "next": "15.2.4",
     "react": "^19.0.0",
+    "react-chartjs-2": "latest",
     "react-dom": "^19.0.0",
-    "next": "15.2.4"
+    "recharts": "latest"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "autoprefixer": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
     "@tailwindcss/postcss": "^4",
     "tailwindcss": "^4",
-    "eslint": "^9",
-    "eslint-config-next": "15.2.4",
-    "@eslint/eslintrc": "^3"
+    "typescript": "latest"
   }
 }
