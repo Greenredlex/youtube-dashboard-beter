@@ -16,7 +16,8 @@
     "react": "^19.0.0",
     "react-chartjs-2": "latest",
     "react-dom": "^19.0.0",
-    "recharts": "latest"
+    "recharts": "latest",
+    "chartjs-plugin-zoom": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",
