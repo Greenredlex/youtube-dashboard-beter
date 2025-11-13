@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## YouTube Tech Channels — Analytics + Global Trending Map
 
-## Getting Started
+I built a clean, fast dashboard to explore how top tech YouTubers perform — flip between rich analytics and a world map of trending videos, play with filters, and spot patterns at a glance.
 
-First, run the development server:
+### What this does
+- Pulls video data from `data/videos.csv` and serves it via `/api/videos`
+- Renders interactive charts (views over time, monthly trends with regression and R², views vs likes)
+- Breaks down channel stats and shows a sortable video gallery
+- Plots a global map of trending videos by country (circles or heatmap) powered by Mapbox
+- Dark mode support, smooth UI, and zoomable charts
 
-```bash
+### Highlights
+- Filters that feel right: channel chips, date range, and a “Filter Shorts” toggle
+- Monthly views with linear regression + R² per channel (so you can see trend strength quickly)
+- Views vs Likes scatter (normalized) with a regression line for signal vs noise
+- Global Trending Map: click a country to see its top videos with thumbnails, views, likes, and quick “Watch” links
+- Video list: beautiful cards with channel colors, dates, views, and duration, sortable by views/date/duration
+
+## Quick start
+Prereqs: Node 18+ and npm.
+
+```powershell
+npm install
+# optional: copy data assets if you keep them elsewhere
+npm run copy-data
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 and start exploring.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Data sources
+- `data/videos.csv` → used by `app/api/videos/route.ts`
+	- expected columns: video_id, video_title, channel_title, published_at, views, likes, duration_seconds, thumbnail_url
+- `data/trending_videos.geojson` → used by `app/api/trending/route.ts`
+	- FeatureCollection of countries with a `videos` array per feature
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+If you update either file, the UI will reflect it live in dev.
 
-## Learn More
+## Mapbox token (one-minute setup)
+The map uses Mapbox GL. There’s a working token set in `app/components/TrendingMap.tsx`.
 
-To learn more about Next.js, take a look at the following resources:
+For your own deployments, drop in your token here:
+`app/components/TrendingMap.tsx`
+```ts
+mapboxgl.accessToken = 'YOUR_PUBLIC_MAPBOX_TOKEN';
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## What’s inside
+- Next.js App Router (TypeScript) + React 19
+- Tailwind CSS 4 for styling
+- Chart.js + react-chartjs-2 (+ zoom plugin) and Recharts for visuals
+- Mapbox GL JS for the globe and heatmaps
+- Simple API routes reading local data files
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Project entry points you might care about:
+- `app/page.tsx` — main dashboard (filters, charts, map switcher, list)
+- `app/shorts/page.tsx` — deeper Shorts vs Regular analysis
+- `app/components/TrendingMap.tsx` — globe with circles/heatmap and country video panel
+- `app/components/ChannelStats.tsx` — channel bar charts and stat cards
+- `app/components/VideoList.tsx` — sortable grid of video cards
 
-## Deploy on Vercel
+## Why
+Because scrolling through YouTube data is more fun when it looks good and tells you something fast.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Credit/Stack
+Built with Next.js, React, Tailwind, Chart.js, Recharts, and Mapbox.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+If you end up using this, send me a screenshot of your favorite chart — I love seeing what people find. 😉
